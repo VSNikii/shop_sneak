@@ -1,17 +1,22 @@
 import Card from './components/Card';
 import Header from './components/Header';
 import Cart from './components/Cart';
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import axios from 'axios';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Favourite from './components/Favourite';
 
-
+const router = createBrowserRouter(routes: [
+  {
+    path: '/favourite',
+    element: <Favourite/>
+  }
+]);
 function App() {
   const [cartOpened, setCartOpened] = React.useState(false);
-  const [isFav, setisFav] = React.useState(false);
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState("");
-  const [fav, setFav] = React.useState([]);
   React.useEffect(() => {
     axios.get('https://667c45163c30891b865c01c1.mockapi.io/items').then((res) => {
       setItems(res.data);
@@ -32,9 +37,7 @@ function App() {
   const searchInput = (event) => {
     setSearchValue(event.target.value);
   }
-  const onAddToFav = () => {
-    
-  }
+
   return (
     <div className='wrapper clear'>
       {cartOpened && <Cart items={cartItems} onRemove={onRemoveItem}
